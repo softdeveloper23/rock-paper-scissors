@@ -16,12 +16,17 @@ def determine_winner(user_move, computer_move):
         "scissors": {"beats": "paper", "loses to": "rock"},
     }
 
+    while True:
+        if user_move in rules:
+            break
+        else:
+            user_move = input("That is not a valid move. Please try again: ").lower()
     if user_move in rules and computer_move in rules[user_move]["beats"]:
-        return "You win!"
+        return "You win, because the computer chose " + computer_move + "!"
     elif user_move in rules and computer_move in rules[user_move]["loses to"]:
-        return "You lose!"
+        return "You lose, because the computer chose " + computer_move + "!"
     elif user_move == computer_move:
-        return "It's a tie!"
+        return "It's a tie, because you both chose " + user_move + "! Try again."
     else:
         return "I don't understand that!"
 
@@ -34,10 +39,21 @@ def play_game():
     while keep_playing:
         computer_move = generate_random_move(moves)
         user_move = input("What is your move? (Rock, Paper, Scissors): ").lower()
-        print(f"The computer chose {computer_move}.")
-        print(determine_winner(user_move, computer_move))
+        winner = determine_winner(user_move, computer_move)
+        print(winner)
+
+        if winner.startswith("You win"):
+            scores["user"] += 1
+        elif winner.startswith("You lose"):
+            scores["computer"] += 1
+        else:
+            pass
 
         keep_playing = input("Do you want to play again? (Y/N): ").lower() == "y"
+    print(
+        f"The final scores are: \nUser: {scores['user']} \nComputer: {scores['computer']} \n"
+    )
+    print("Thanks for playing!")
 
 
 if __name__ == "__main__":
