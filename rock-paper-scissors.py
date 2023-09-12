@@ -1,5 +1,6 @@
 import random
 import re
+import time
 
 
 # This is a simple rock, paper, scissors game.
@@ -61,6 +62,8 @@ def play_game():
     while keep_playing:
         computer_move = generate_random_move(moves)
         user_move = input("What is your move? (Rock, Paper, Scissors): ").lower()
+
+        # This passes the moves to the determine_winner function which returns the winner
         winner = determine_winner(user_move, computer_move)
         print(winner)
 
@@ -84,7 +87,7 @@ def validate_name(name):
     regex = "^[a-zA-Z]+$"
     match = re.match(regex, name)
 
-    if match:
+    if match and len(name) > 1 and len(name) <= 20:
         return True
     else:
         name = ""
