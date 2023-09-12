@@ -1,5 +1,6 @@
 import random
 import re
+import time
 
 
 # This is a simple rock, paper, scissors game.
@@ -21,12 +22,10 @@ def determine_winner(user_move, computer_move):
         "paper": {"beats": "rock", "loses to": "scissors"},
         "scissors": {"beats": "paper", "loses to": "rock"},
     }
+
     # This checks if the user's move is valid
-    while True:
-        if user_move in rules:
-            break
-        else:
-            user_move = input("That is not a valid move. Please try again: ").lower()
+    if user_move not in rules:
+        return "That is not a valid move."
 
     # This checks if the user won, lost, or tied
     if user_move in rules and computer_move in rules[user_move]["beats"]:
@@ -49,21 +48,22 @@ def play_game():
     keep_playing = True
 
     # This variable stores the user's name
-    name = input("What is your name? ")
-
+    name = ""
     while True:
-        # This validates the user's name
+        name = input("What is your name? ")
         if not validate_name(name):
             print("Please enter a valid name.")
-            name = input("What is your name? ")
         else:
             break
+    name = name.capitalize()
     print(f"Hi {name}! Let's play Rock, Paper, Scissors!")
 
     # This loop runs the game until the user doesn't want to play anymore
     while keep_playing:
         computer_move = generate_random_move(moves)
         user_move = input("What is your move? (Rock, Paper, Scissors): ").lower()
+
+        # This passes the moves to the determine_winner function which returns the winner
         winner = determine_winner(user_move, computer_move)
         print(winner)
 
@@ -87,9 +87,10 @@ def validate_name(name):
     regex = "^[a-zA-Z]+$"
     match = re.match(regex, name)
 
-    if match:
+    if match and len(name) > 1 and len(name) <= 20:
         return True
     else:
+        name = ""
         return False
 
 
