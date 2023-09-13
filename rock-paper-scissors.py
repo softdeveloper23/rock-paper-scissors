@@ -69,9 +69,9 @@ def play_game():
         print(winner)
 
         # This updates the scores
-        if winner.startswith("You win"):
+        if winner.startswith("\nYou win"):
             scores["user"] += 1
-        elif winner.startswith("You lose"):
+        elif winner.startswith("\nYou lose"):
             scores["computer"] += 1
         else:
             pass
