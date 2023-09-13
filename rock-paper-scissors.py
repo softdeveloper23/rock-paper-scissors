@@ -1,5 +1,6 @@
 import random
-import re
+import os
+
 
 # Move options in the game
 MOVES = ["rock", "paper", "scissors"]
@@ -11,6 +12,22 @@ RULES = {
     "scissors": {"beats": "paper", "loses to": "rock"},
 }
 
+TAUNTS1 = [
+    "How did you win?",
+    "That was pure luck!",
+    "Are you cheating?",
+    "Calculating next move...",
+    "Unbelievable!",
+]
+
+TAUNTS2 = [
+    "I know your next move...",
+    "Is that all you've got?",
+    "You're so predictable!",
+    "I can read you like an open book!",
+    "You'll have to do better than that!",
+]
+
 
 # A class to handle invalid moves
 class InvalidMoveError(Exception):
@@ -20,6 +37,14 @@ class InvalidMoveError(Exception):
 def main():
     name = get_name()
     play_game(name)
+
+
+# A function to clear the screen
+def clear_screen():
+    if os.name == "posix":  # Linux/Unix Terminal
+        os.system("clear")
+    elif os.name == "nt":  # Windows
+        os.system("cls")
 
 
 # A function to get the user's name
@@ -104,6 +129,10 @@ def get_user_move():
             print("\nThat is not a valid move.")
 
 
+def generate_taunt(taunts):
+    return random.choice(taunts)
+
+
 # A function to ask the user if they want to play again
 def play_again():
     while True:
@@ -151,8 +180,20 @@ def play_game(name):
 
             if winner.startswith("\nYou win"):
                 scores["user"] += 1
+
+                # Generate a taunt and display it after each round
+                taunt1 = generate_taunt(TAUNTS1)
+                print(taunt1)
+                input("Press Enter to continue...")
+                clear_screen()
             elif winner.startswith("\nYou lose"):
                 scores["computer"] += 1
+
+                # Generate a taunt and display it after each round
+                taunt2 = generate_taunt(TAUNTS2)
+                print(taunt2)
+                input("Press Enter to continue...")
+                clear_screen()
 
             # Check if either player has reached the maximum points
             if scores["user"] == max_points or scores["computer"] == max_points:
