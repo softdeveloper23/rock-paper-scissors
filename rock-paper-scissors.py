@@ -37,9 +37,46 @@ def validate_name(name):
     return name.isalpha() and 1 < len(name) <= 20
 
 
-# A function to generate a random move for the computer
-def generate_random_move(moves):
-    return random.choice(moves)
+# Get the difficulty level chosen by the user
+def get_difficulty():
+    while True:
+        difficulty = input("Choose the difficulty level (easy, medium, hard): ").lower()
+        if difficulty in ["easy", "medium", "hard"]:
+            return difficulty
+        else:
+            print("Invalid input. Please choose between easy, medium, or hard.")
+
+
+# A function to generate a random move for the computer based on the user's difficulty chosen
+def generate_random_move(moves, difficulty, user_move_history):
+    if difficulty == "easy":
+        return random.choice(moves)
+    elif difficulty == "medium":
+        return generate_medium_move(moves, user_move_history)
+    elif difficulty == "hard":
+        return generate_hard_move(moves, user_move_history)
+
+
+# A function to generate a medium move for the computer based on the user's move history
+def generate_medium_move(moves, user_move_history):
+    if len(user_move_history) == 0:
+        return random.choice(moves)
+    else:
+        most_common_move = max(set(user_move_history), key=user_move_history.count)
+        return RULES[most_common_move]["loses to"]
+
+
+# A function to generate a hard move for the computer based on the user's move history
+def generate_hard_move(moves, user_move_history):
+    if len(user_move_history) < 2:
+        return random.choice(moves)
+    else:
+        last_move = user_move_history[-1]
+        second_last_move = user_move_history[-2]
+        if last_move == second_last_move:
+            return RULES[last_move]["loses to"]
+        else:
+            return random.choice(moves)
 
 
 # A function to determine the winner of the game
@@ -79,28 +116,35 @@ def play_again():
             print("\nPlease enter Y or N.")
 
 
-# A function to play the game
+# A fuction to play the game
 def play_game(name):
     scores = {"user": 0, "computer": 0}
+
+    # A list to store the user's move history
+    user_move_history = []
+
+    # A variable to store the difficulty level chosen by the user
+    difficulty = get_difficulty()
 
     # Ask the user how many points to play until the game ends
     while True:
         try:
             max_points = int(
-                input("\nEnter the number of points to play until the game ends: ")
+                input("Enter the number of points to play until the game ends: ")
             )
             if max_points > 0:
                 break
             else:
-                print("\nPlease enter a positive number.")
+                print("Please enter a positive number.")
         except ValueError:
-            print("\nInvalid input. Please enter a number.")
+            print("Invalid input. Please enter a number.")
 
-    # Play the game until either player reaches the maximum points
+    # A loop to play the game
     while True:
         try:
-            computer_move = generate_random_move(MOVES)
+            computer_move = generate_random_move(MOVES, difficulty, user_move_history)
             user_move = get_user_move()
+            user_move_history.append(user_move)
 
             winner = determine_winner(user_move, computer_move)
             print(winner)
@@ -118,7 +162,7 @@ def play_game(name):
             print(e)
 
     print(
-        f"\nThe final scores are:\n{name}: {scores['user']}\nComputer: {scores['computer']}\n"
+        f"The final scores are:\n{name}: {scores['user']}\nComputer: {scores['computer']}\n"
     )
     print("Thanks for playing!")
 
