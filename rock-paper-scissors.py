@@ -118,7 +118,7 @@ def play_game(name):
             print(e)
 
     print(
-        f"\nThe final scores are:\nUser: {scores['user']}\nComputer: {scores['computer']}\n"
+        f"\nThe final scores are:\n{name}: {scores['user']}\nComputer: {scores['computer']}\n"
     )
     print("Thanks for playing!")
 
