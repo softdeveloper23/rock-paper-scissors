@@ -14,19 +14,19 @@ RULES = {
 }
 
 TAUNTS1 = [
-    "How did you win?\n\n",
-    "That was pure luck!\n\n",
-    "Are you cheating?\n\n",
-    "Calculating next move...\n\n",
-    "Unbelievable!\n\n",
+    "'How did you win?'\n\n",
+    "'That was pure luck!'\n\n",
+    "'Are you cheating?'\n\n",
+    "'Calculating next move...'\n\n",
+    "'Unbelievable!'\n\n",
 ]
 
 TAUNTS2 = [
-    "I know your next move...\n\n",
-    "Is that all you've got?\n\n",
-    "You're so predictable!\n\n",
-    "I can read you like an open book!\n\n",
-    "You'll have to do better than that!\n\n",
+    "'I know your next move...'\n\n",
+    "'Is that all you've got?'\n\n",
+    "'You're so predictable!'\n\n",
+    "'I can read you like an open book!'\n\n",
+    "'You'll have to do better than that!'\n\n",
 ]
 
 
@@ -72,7 +72,9 @@ def validate_name(name):
 # Get the difficulty level chosen by the user
 def get_difficulty():
     while True:
-        difficulty = input("Choose the difficulty level (easy, medium, hard): ").lower()
+        difficulty = input(
+            "\nChoose the difficulty level (easy, medium, hard): "
+        ).lower()
         if difficulty in ["easy", "medium", "hard"]:
             return difficulty
         else:
@@ -169,7 +171,7 @@ def play_game(name):
     while True:
         try:
             max_points = int(
-                input("Enter the number of points to play until the game ends: ")
+                input("\nEnter the number of points to play until the game ends: ")
             )
             if max_points > 0:
                 break
@@ -193,7 +195,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt1 = generate_taunt(TAUNTS1)
-                print_typewriter(taunt1)
+                print_typewriter(f"The computer says: {taunt1}")
                 input("Press Enter to continue...")
                 clear_screen()
             elif winner.startswith("\nYou lose"):
@@ -201,7 +203,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt2 = generate_taunt(TAUNTS2)
-                print_typewriter(taunt2)
+                print_typewriter(f"The computer says: {taunt2}")
                 input("Press Enter to continue...")
                 clear_screen()
 
@@ -212,7 +214,9 @@ def play_game(name):
         except InvalidMoveError as e:
             print_typewriter(str(e))
 
-        print_typewriter(f"\n{name}: {scores['user']} | Computer: {scores['computer']}")
+        print_typewriter(
+            f"\n{name}: {scores['user']} | Computer: {scores['computer']}\n"
+        )
 
     if scores["user"] > scores["computer"]:
         print_typewriter(
