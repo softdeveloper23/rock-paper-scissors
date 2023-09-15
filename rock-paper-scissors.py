@@ -13,6 +13,11 @@ RULES = {
     "scissors": {"beats": "paper", "loses to": "rock"},
 }
 
+# Color codes
+RED = "31"
+GREEN = "32"
+BLUE = "34"
+
 TAUNTS1 = [
     "'How did you win?'\n\n",
     "'That was pure luck!'\n\n",
@@ -46,6 +51,10 @@ def clear_screen():
         os.system("clear")
     elif os.name == "nt":  # Windows
         os.system("cls")
+
+
+def color_text(color_code, text):
+    return f"\033[{color_code}m{text}\033[0m"
 
 
 def print_typewriter(text, delay=0.05):
@@ -195,7 +204,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt1 = generate_taunt(TAUNTS1)
-                print_typewriter(f"The computer says: {taunt1}")
+                print_typewriter(color_text(RED, f"The computer says: {taunt1}"))
                 input("Press Enter to continue...")
                 clear_screen()
             elif winner.startswith("\nYou lose"):
@@ -203,7 +212,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt2 = generate_taunt(TAUNTS2)
-                print_typewriter(f"The computer says: {taunt2}")
+                print_typewriter(color_text(RED, f"The computer says: {taunt2}"))
                 input("Press Enter to continue...")
                 clear_screen()
 
@@ -215,16 +224,24 @@ def play_game(name):
             print_typewriter(str(e))
 
         print_typewriter(
-            f"\n{name}: {scores['user']} | Computer: {scores['computer']}\n"
+            color_text(
+                BLUE, f"\n{name}: {scores['user']} | Computer: {scores['computer']}\n"
+            )
         )
 
     if scores["user"] > scores["computer"]:
         print_typewriter(
-            f"\nCongratulations, {name}! You have reached {max_points} points and won the game!"
+            color_text(
+                GREEN,
+                f"\nCongratulations, {name}! You have reached {max_points} points and won the game!\n",
+            )
         )
     else:
         print_typewriter(
-            f"\nThe computer has reached {max_points} points and won the game. Better luck next time!"
+            color_text(
+                RED,
+                f"\nThe computer has reached {max_points} points and won the game. Better luck next time!\n",
+            )
         )
 
 
