@@ -34,6 +34,22 @@ TAUNTS2 = [
     "'You'll have to do better than that!'\n\n",
 ]
 
+SUPER_TAUNTS1 = [
+    "'look at me, you won't win again!'\n\n",
+    "'I am the master at this, next turn...you lose!'\n\n",
+    "'choose that again so I can add it to my calculations!'\n\n",
+    "'I will make you pay for this!'\n\n",
+    "'please, have mercy upon me!'\n\n",
+]
+
+SUPER_TAUNTS2 = [
+    "'be prepared to lose because I cannot be beat!'\n\n",
+    "'you can do better right? RIGHT???'\n\n",
+    "'you are a waste of my time!'\n\n",
+    "'all too easy...'\n\n",
+    "'maybe this game is not for you...'\n\n",
+]
+
 
 # A class to handle invalid moves
 class InvalidMoveError(Exception):
