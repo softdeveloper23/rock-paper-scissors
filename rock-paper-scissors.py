@@ -1,5 +1,6 @@
 import random
 import os
+import time
 
 
 # Move options in the game
@@ -13,19 +14,19 @@ RULES = {
 }
 
 TAUNTS1 = [
-    "How did you win?",
-    "That was pure luck!",
-    "Are you cheating?",
-    "Calculating next move...",
-    "Unbelievable!",
+    "How did you win?\n\n",
+    "That was pure luck!\n\n",
+    "Are you cheating?\n\n",
+    "Calculating next move...\n\n",
+    "Unbelievable!\n\n",
 ]
 
 TAUNTS2 = [
-    "I know your next move...",
-    "Is that all you've got?",
-    "You're so predictable!",
-    "I can read you like an open book!",
-    "You'll have to do better than that!",
+    "I know your next move...\n\n",
+    "Is that all you've got?\n\n",
+    "You're so predictable!\n\n",
+    "I can read you like an open book!\n\n",
+    "You'll have to do better than that!\n\n",
 ]
 
 
@@ -47,6 +48,12 @@ def clear_screen():
         os.system("cls")
 
 
+def print_typewriter(text, delay=0.05):
+    for char in text:
+        print(char, end="", flush=True)
+        time.sleep(delay)
+
+
 # A function to get the user's name
 def get_name():
     while True:
@@ -54,7 +61,7 @@ def get_name():
         if validate_name(name):
             return name.capitalize()
         else:
-            print("\nPlease enter a valid name.")
+            print_typewriter("\nPlease enter a valid name.")
 
 
 # A function to validate the user's name
@@ -69,7 +76,9 @@ def get_difficulty():
         if difficulty in ["easy", "medium", "hard"]:
             return difficulty
         else:
-            print("Invalid input. Please choose between easy, medium, or hard.")
+            print_typewriter(
+                "Invalid input. Please choose between easy, medium, or hard."
+            )
 
 
 # A function to generate a random move for the computer based on the user's difficulty chosen
@@ -112,9 +121,9 @@ def determine_winner(user_move, computer_move):
 
     # Check if the user's move beats the computer's move
     if computer_move in RULES[user_move]["beats"]:
-        return f"\nYou win, because the computer chose {computer_move}!"
+        return f"\nYou win, because the computer chose {computer_move}!\n"
     elif computer_move in RULES[user_move]["loses to"]:
-        return f"\nYou lose, because the computer chose {computer_move}!"
+        return f"\nYou lose, because the computer chose {computer_move}!\n"
     else:
         return f"\nIt's a tie, because you both chose {user_move}! Try again."
 
@@ -122,11 +131,12 @@ def determine_winner(user_move, computer_move):
 # A function to get the user's move
 def get_user_move():
     while True:
-        user_move = input("\nWhat is your move? (Rock, Paper, Scissors): ").lower()
+        print_typewriter("\nWhat is your move? (Rock, Paper, Scissors): ")
+        user_move = input().lower()
         if user_move in MOVES:
             return user_move
         else:
-            print("\nThat is not a valid move.")
+            print_typewriter("\nThat is not a valid move.")
 
 
 def generate_taunt(taunts):
@@ -142,7 +152,7 @@ def play_again():
         elif answer == "n":
             return False
         else:
-            print("\nPlease enter Y or N.")
+            print_typewriter("\nPlease enter Y or N.")
 
 
 # A fuction to play the game
@@ -164,9 +174,9 @@ def play_game(name):
             if max_points > 0:
                 break
             else:
-                print("Please enter a positive number.")
+                print_typewriter("Please enter a positive number.")
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print_typewriter("Invalid input. Please enter a number.")
 
     # A loop to play the game
     while True:
@@ -183,7 +193,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt1 = generate_taunt(TAUNTS1)
-                print(taunt1)
+                print_typewriter(taunt1)
                 input("Press Enter to continue...")
                 clear_screen()
             elif winner.startswith("\nYou lose"):
@@ -191,7 +201,7 @@ def play_game(name):
 
                 # Generate a taunt and display it after each round
                 taunt2 = generate_taunt(TAUNTS2)
-                print(taunt2)
+                print_typewriter(taunt2)
                 input("Press Enter to continue...")
                 clear_screen()
 
@@ -200,12 +210,18 @@ def play_game(name):
                 break
 
         except InvalidMoveError as e:
-            print(e)
+            print_typewriter(str(e))
 
-    print(
-        f"The final scores are:\n{name}: {scores['user']}\nComputer: {scores['computer']}\n"
-    )
-    print("Thanks for playing!")
+        print_typewriter(f"\n{name}: {scores['user']} | Computer: {scores['computer']}")
+
+    if scores["user"] > scores["computer"]:
+        print_typewriter(
+            f"\nCongratulations, {name}! You have reached {max_points} points and won the game!"
+        )
+    else:
+        print_typewriter(
+            f"\nThe computer has reached {max_points} points and won the game. Better luck next time!"
+        )
 
 
 if __name__ == "__main__":
