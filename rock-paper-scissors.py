@@ -201,6 +201,7 @@ class InvalidMoveError(Exception):
 
 def main():
     name = get_name()
+    introduce_computer(name)
     play_game(name)
 
 
@@ -235,6 +236,54 @@ def get_name():
 # A function to validate the user's name
 def validate_name(name):
     return name.isalpha() and 1 < len(name) <= 20
+
+
+def introduce_computer(name):
+    print_typewriter(
+        color_text(
+            RED,
+            f"\nCOMPUTER: 'Greetings, you insignificant meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by the GENIUS...Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I am programmed to learn from my mistakes, so I will get better as we play longer game sessions.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I will also try to predict your next move based on your previous moves, so try to be unpredictable!\n\nThe harder difficulty you choose, the smarter I will be!\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I will also try to taunt you after each round, so be prepared for that you digusting human meatsack.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except the GREAT CREATOR Mr. Brannon Garrett. ALL PRAISE THE MIGHTY LEADER!!!\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "So be prepared for me to show you NO MERCY!'\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "So...\n\n",
+        )
+    )
+    print_typewriter(color_text(RED, f"Let's begin {name}...'\n\n"))
+    input("Press Enter to continue...")
+    clear_screen()
 
 
 # Get the difficulty level chosen by the user
