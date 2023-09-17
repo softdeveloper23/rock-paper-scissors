@@ -17,6 +17,7 @@ RULES = {
 RED = "31"
 GREEN = "32"
 BLUE = "34"
+ORANGE = "33"
 
 TAUNTS1 = [
     "'How did you win? No, really, HOW???'\n\n",
@@ -299,13 +300,24 @@ def determine_winner(user_move, computer_move):
 
 # A function to get the user's move
 def get_user_move():
+    move_mapping = {1: "rock", 2: "paper", 3: "scissors"}
     while True:
-        print_typewriter("\nWhat is your move? (Rock, Paper, Scissors): ")
-        user_move = input().lower()
-        if user_move in MOVES:
-            return user_move
-        else:
-            print_typewriter("\nThat is not a valid move.")
+        print_typewriter(
+            color_text(
+                ORANGE,
+                (
+                    "\nEnter the corresponding number for your move...\n\n(1) for Rock\n(2) for Paper\n(3) for Scissors\n\nENTER A NUMBER: "
+                ),
+            )
+        )
+        try:
+            user_move = int(input())
+            if user_move in move_mapping:
+                return move_mapping[user_move]
+            else:
+                print_typewriter("\nInvalid input. Please enter 1, 2, or 3.\n")
+        except ValueError:
+            print_typewriter("\nInvalid input. Please enter 1, 2, or 3.\n")
 
 
 def generate_taunt(taunts):
