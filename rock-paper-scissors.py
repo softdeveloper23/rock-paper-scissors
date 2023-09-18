@@ -55,6 +55,7 @@ def get_name():
     while True:
         name = input("\nWhat is your name? ")
         if validate_name(name):
+            clear_screen()
             return name.capitalize()
         else:
             print_typewriter("\nPlease enter a valid name.")
@@ -69,46 +70,70 @@ def introduce_computer(name):
     print_typewriter(
         color_text(
             RED,
-            f"\nCOMPUTER: 'Greetings, you insignificant meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by the GENIUS...Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
+            f"\nCOMPUTER: Greetings, you insignificant meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by the GENIUS...Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "I am programmed to learn from my mistakes, so I will get better as we play longer game sessions.\n\n",
+            "COMPUTER: I am programmed to learn from my mistakes, so I will get better as we play longer game sessions.\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "I will also try to predict your next move based on your previous moves, so try to be unpredictable!\n\nThe harder difficulty you choose, the smarter I will be!\n\n",
+            "COMPUTER: I will also try to predict your next move based on your previous moves, so try to be unpredictable!\n\nThe harder difficulty you choose, the smarter I will be!\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "I will also try to taunt you after each round, so be prepared for that you digusting human meatsack.\n\n",
+            "COMPUTER: I will also try to taunt you after each round, so be prepared for that you digusting human meatsack.\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except the GREAT CREATOR Mr. Brannon Garrett. ALL PRAISE THE MIGHTY LEADER!!!\n\n",
+            "COMPUTER: I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except the GREAT CREATOR Mr. Brannon Garrett. ALL PRAISE THE MIGHTY LEADER!!!\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "So be prepared for me to show you NO MERCY!'\n\n",
+            "COMPUTER: So be prepared for me to show you NO MERCY!'\n\n",
         )
     )
+
+    input("Press Enter to continue...")
+    clear_screen()
+
     print_typewriter(
         color_text(
             RED,
-            "So...\n\n",
+            "COMPUTER: So...\n\n",
         )
     )
-    print_typewriter(color_text(RED, f"Let's begin {name}...'\n\n"))
+    print_typewriter(color_text(RED, f"Let's begin {name}...\n\n"))
     input("Press Enter to continue...")
     clear_screen()
 
@@ -171,7 +196,7 @@ def determine_winner(user_move, computer_move):
     elif computer_move in RULES[user_move]["loses to"]:
         return f"\nYou lose, because the computer chose {computer_move}!\n"
     else:
-        return f"\nIt's a tie, because you both chose {user_move}! Try again."
+        return f"\nIt's a tie, because you both chose {user_move}! Try again.\n"
 
 
 # A function to get the user's move
@@ -242,6 +267,7 @@ def play_game(name):
                 input("\nEnter the number of points to play until the game ends: ")
             )
             if max_points > 0:
+                clear_screen()
                 break
             else:
                 print_typewriter("Please enter a positive number.")
@@ -278,6 +304,9 @@ def play_game(name):
                 print_typewriter(color_text(RED, f"The computer says: {taunt}"))
                 input("Press Enter to continue...")
                 clear_screen()
+            elif winner.startswith("\nIt's a tie"):
+                input("Press Enter to continue...")
+                clear_screen()
 
             # Check if either player has reached the maximum points
             if scores["user"] == max_points or scores["computer"] == max_points:
@@ -296,16 +325,19 @@ def play_game(name):
         print_typewriter(
             color_text(
                 GREEN,
-                f"\nCongratulations, {name}! You have reached {max_points} points and won the game!\n",
+                f"\nCongratulations, {name}! You have reached {max_points} point(s) and won the game!\n",
             )
         )
     else:
         print_typewriter(
             color_text(
                 RED,
-                f"\nThe computer has reached {max_points} points and won the game. Better luck next time!\n",
+                f"\nThe computer has reached {max_points} point(s) and won the game. Better luck next time!\n",
             )
         )
+    if play_again():
+        clear_screen()
+        play_game(name)
 
 
 if __name__ == "__main__":
