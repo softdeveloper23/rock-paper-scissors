@@ -1,6 +1,7 @@
 import random
 import os
 import time
+from taunts import TAUNTS1, TAUNTS2, SUPER_TAUNTS1, SUPER_TAUNTS2
 
 
 # Move options in the game
@@ -17,38 +18,7 @@ RULES = {
 RED = "31"
 GREEN = "32"
 BLUE = "34"
-
-TAUNTS1 = [
-    "'How did you win?'\n\n",
-    "'That was pure luck!'\n\n",
-    "'Are you cheating?'\n\n",
-    "'Calculating next move...'\n\n",
-    "'Unbelievable!'\n\n",
-]
-
-TAUNTS2 = [
-    "'I know your next move...'\n\n",
-    "'Is that all you've got?'\n\n",
-    "'You're so predictable!'\n\n",
-    "'I can read you like an open book!'\n\n",
-    "'You'll have to do better than that!'\n\n",
-]
-
-SUPER_TAUNTS1 = [
-    "'look at me, you won't win again!'\n\n",
-    "'I am the master at this, next turn...you lose!'\n\n",
-    "'choose that again so I can add it to my calculations!'\n\n",
-    "'I will make you pay for this!'\n\n",
-    "'please, have mercy upon me!'\n\n",
-]
-
-SUPER_TAUNTS2 = [
-    "'be prepared to lose because I cannot be beat!'\n\n",
-    "'you can do better right? RIGHT???'\n\n",
-    "'you are a waste of my time!'\n\n",
-    "'all too easy...'\n\n",
-    "'maybe this game is not for you...'\n\n",
-]
+ORANGE = "33"
 
 
 # A class to handle invalid moves
@@ -58,6 +28,7 @@ class InvalidMoveError(Exception):
 
 def main():
     name = get_name()
+    introduce_computer(name)
     play_game(name)
 
 
@@ -73,7 +44,7 @@ def color_text(color_code, text):
     return f"\033[{color_code}m{text}\033[0m"
 
 
-def print_typewriter(text, delay=0.05):
+def print_typewriter(text, delay=0.03):
     for char in text:
         print(char, end="", flush=True)
         time.sleep(delay)
@@ -92,6 +63,54 @@ def get_name():
 # A function to validate the user's name
 def validate_name(name):
     return name.isalpha() and 1 < len(name) <= 20
+
+
+def introduce_computer(name):
+    print_typewriter(
+        color_text(
+            RED,
+            f"\nCOMPUTER: 'Greetings, you insignificant meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by the GENIUS...Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I am programmed to learn from my mistakes, so I will get better as we play longer game sessions.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I will also try to predict your next move based on your previous moves, so try to be unpredictable!\n\nThe harder difficulty you choose, the smarter I will be!\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I will also try to taunt you after each round, so be prepared for that you digusting human meatsack.\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except the GREAT CREATOR Mr. Brannon Garrett. ALL PRAISE THE MIGHTY LEADER!!!\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "So be prepared for me to show you NO MERCY!'\n\n",
+        )
+    )
+    print_typewriter(
+        color_text(
+            RED,
+            "So...\n\n",
+        )
+    )
+    print_typewriter(color_text(RED, f"Let's begin {name}...'\n\n"))
+    input("Press Enter to continue...")
+    clear_screen()
 
 
 # Get the difficulty level chosen by the user
@@ -157,17 +176,41 @@ def determine_winner(user_move, computer_move):
 
 # A function to get the user's move
 def get_user_move():
+    move_mapping = {1: "rock", 2: "paper", 3: "scissors"}
     while True:
-        print_typewriter("\nWhat is your move? (Rock, Paper, Scissors): ")
-        user_move = input().lower()
-        if user_move in MOVES:
-            return user_move
-        else:
-            print_typewriter("\nThat is not a valid move.")
+        print_typewriter(
+            color_text(
+                ORANGE,
+                (
+                    "\nEnter the corresponding number for your move...\n\n(1) for Rock\n(2) for Paper\n(3) for Scissors\n\nENTER A NUMBER: "
+                ),
+            )
+        )
+        try:
+            user_move = int(input())
+            if user_move in move_mapping:
+                return move_mapping[user_move]
+            else:
+                print_typewriter("\nInvalid input. Please enter 1, 2, or 3.\n")
+        except ValueError:
+            print_typewriter("\nInvalid input. Please enter 1, 2, or 3.\n")
 
 
 def generate_taunt(taunts):
     return random.choice(taunts)
+
+
+def generate_taunt_based_on_score(taunts, super_taunts, scores, user_won, name):
+    score_difference = (
+        scores["user"] - scores["computer"]
+        if user_won
+        else scores["computer"] - scores["user"]
+    )
+    if score_difference >= 2:
+        taunt = generate_taunt(super_taunts)
+    else:
+        taunt = generate_taunt(taunts)
+    return taunt.format(name=name)
 
 
 # A function to ask the user if they want to play again
@@ -219,16 +262,20 @@ def play_game(name):
                 scores["user"] += 1
 
                 # Generate a taunt and display it after each round
-                taunt1 = generate_taunt(TAUNTS1)
-                print_typewriter(color_text(RED, f"The computer says: {taunt1}"))
+                taunt = generate_taunt_based_on_score(
+                    TAUNTS1, SUPER_TAUNTS1, scores, True, name
+                )
+                print_typewriter(color_text(RED, f"The computer says: {taunt}"))
                 input("Press Enter to continue...")
                 clear_screen()
             elif winner.startswith("\nYou lose"):
                 scores["computer"] += 1
 
                 # Generate a taunt and display it after each round
-                taunt2 = generate_taunt(TAUNTS2)
-                print_typewriter(color_text(RED, f"The computer says: {taunt2}"))
+                taunt = generate_taunt_based_on_score(
+                    TAUNTS2, SUPER_TAUNTS2, scores, False, name
+                )
+                print_typewriter(color_text(RED, f"The computer says: {taunt}"))
                 input("Press Enter to continue...")
                 clear_screen()
 
