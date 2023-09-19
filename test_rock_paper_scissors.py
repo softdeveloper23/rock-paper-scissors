@@ -1,5 +1,12 @@
 import unittest.mock
-from rock_paper_scissors import get_name, validate_name, get_difficulty
+from rock_paper_scissors import (
+    get_name,
+    validate_name,
+    get_difficulty,
+    generate_random_move,
+)
+
+MOVES = ["rock", "paper", "scissors"]
 
 
 def test_get_name():
@@ -42,3 +49,25 @@ def test_get_difficulty():
         "rock_paper_scissors.input", side_effect=["invalid", "easy"]
     ):
         assert get_difficulty() == "easy"
+
+
+def test_generate_random_move_easy():
+    with unittest.mock.patch("random.choice", return_value="rock"):
+        result = generate_random_move(MOVES, "easy", [])
+        assert result == "rock"
+
+
+def test_generate_random_move_medium():
+    with unittest.mock.patch(
+        "rock_paper_scissors.generate_medium_move", return_value="paper"
+    ):
+        result = generate_random_move(MOVES, "medium", [])
+        assert result == "paper"
+
+
+def test_generate_random_move_hard():
+    with unittest.mock.patch(
+        "rock_paper_scissors.generate_hard_move", return_value="scissors"
+    ):
+        result = generate_random_move(MOVES, "hard", [])
+        assert result == "scissors"
