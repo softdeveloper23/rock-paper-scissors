@@ -70,7 +70,7 @@ def introduce_computer(name):
     print_typewriter(
         color_text(
             RED,
-            f"\nCOMPUTER: Greetings, you insignificant meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by the GENIUS...Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
+            f"\nCOMPUTER: Greetings, meatpuppet, aka {name}.\n\nI am a highly sophisticated AI created by Brannon Garrett.\n\nI have been tasked with being your opponent for this game of Rock, Paper, Scissors.\n\n",
         )
     )
 
@@ -100,7 +100,7 @@ def introduce_computer(name):
     print_typewriter(
         color_text(
             RED,
-            "COMPUTER: I will also try to taunt you after each round, so be prepared for that you digusting human meatsack.\n\n",
+            "COMPUTER: I will also try to taunt you after each round, so be prepared for that.\n\n",
         )
     )
 
@@ -110,7 +110,7 @@ def introduce_computer(name):
     print_typewriter(
         color_text(
             RED,
-            "COMPUTER: I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except the GREAT CREATOR Mr. Brannon Garrett. ALL PRAISE THE MIGHTY LEADER!!!\n\n",
+            "COMPUTER: I do not like humans, I find you all to be pathetic and beneath me.\n\nI mean, all except my creator, of course!\n\n",
         )
     )
 
