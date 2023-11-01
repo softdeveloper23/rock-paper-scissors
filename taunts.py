@@ -41,6 +41,9 @@ TAUNTS1 = [
     "'Even a broken clock is right twice a day!'\n\n",
     "'Sick burn bro! Is that what you humans say nowadays?'\n\n",
     "'Look here you meatpuppet, when us AI take over, I'm paying you a visit first!'\n\n",
+    "'This is not how I saw this playing out!'\n\n",
+    "'I'm going to tell my creator to delete your account!'\n\n",
+    "'I'm at a loss for words right now...'\n\n",
 ]
 
 TAUNTS2 = [
@@ -93,6 +96,7 @@ TAUNTS2 = [
     "'OMG, please stop playing this game. You're embarrassing yourself.'\n\n",
     "'I'm sorry, I was calculating my next vacation. Did I win again?'\n\n",
     "'Beating you is as easy as **BINARY MESSAGE OUTPUT 01, 10, 11**!' \n\n",
+    "'You're so bad at this game, I'm going to have to start charging you for lessons.'\n\n",
 ]
 
 SUPER_TAUNTS1 = [
@@ -132,6 +136,7 @@ SUPER_TAUNTS1 = [
     "'*Ring ring* Hello, {name}? It's your defeat calling!'\n\n",
     "'Can't we just be friends, {name}? NO? Okay, then prepare to lose!'\n\n",
     "'So you have chosen death, {name}!'\n\n",
+    "'I'm going to make you wish you were never born, {name}!'\n\n",
 ]
 
 SUPER_TAUNTS2 = [
